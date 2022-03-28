@@ -3,40 +3,49 @@
 using namespace std;
 
 #define ll long long
+#define ull unsigned long long
 #define fi first
 #define sc second
 #define pb push_back
 #define all(x) x.begin(),x.end()
 #define endl "\n"
 
-const int maxn = 1e5+1;
+const int maxn = 1e3+1;
 const ll mod = 1e9+7;
+const int row[] = {0, 1};
+const int col[] = {1, 0};
+const string ch[] = {"R", "D"};
 typedef pair<int,int> ii;
 
-int n,k;
-int x[maxn];
+int n, k;
+std::vector<int> x(maxn), sum(maxn);
 
-void print() {
-    for(int i = 0; i < k; i++) {
-        cout << x[i];
+void print(int k) {
+    cout << '(';
+    for(int i = 1; i < k; i++) {
+        cout << x[i] << ' ';
     }
-    cout << ' ';
+    cout << x[k] << ") ";
 }
 
 void Try(int i) {
-    // x[i-1]+1 <= x[i] <= n-k+i+1 (i =  0 ... k-1)
-    for(int j = x[i-1]+1; j <= n-k+i+1; j++) {
+    for(int j = min(n-sum[i-1], x[i-1]); j >= 1 ; j--) {
         x[i] = j;
-        if (i == k-1) print();
-        else Try(i+1);
+        sum[i] = sum[i-1] + j;
+        if(sum[i] == n)
+            print(i);
+        else
+            Try(i+1);
     }
 }
 
+
 void process() {
-    cin >> n >> k;
-    Try(0);
+    cin >> n;
+    x[0] = n;
+    sum[0] = 0;
+    Try(1);
     cout << endl;
-    
 }
 
 int main() {

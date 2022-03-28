@@ -13,30 +13,25 @@ const int maxn = 1e5+1;
 const ll mod = 1e9+7;
 typedef pair<int,int> ii;
 
-int n,k;
-int x[maxn];
-
-void print() {
-    for(int i = 0; i < k; i++) {
-        cout << x[i];
-    }
-    cout << ' ';
-}
-
-void Try(int i) {
-    // x[i-1]+1 <= x[i] <= n-k+i+1 (i =  0 ... k-1)
-    for(int j = x[i-1]+1; j <= n-k+i+1; j++) {
-        x[i] = j;
-        if (i == k-1) print();
-        else Try(i+1);
-    }
-}
+int n, k;
 
 void process() {
     cin >> n >> k;
-    Try(0);
+    std::vector<int> a(n);
+    for(int i = 1; i <= k; i++) cin >> a[i];
+    int pos = k-1;
+    while(pos && a[pos] + 1 == a[pos+1]) pos--;
+    if(pos == 0) {
+        for(int i = 1; i <= k; i++) cout << n-k+i << ' ';
+        cout << endl;
+        return;
+    }
+    a[++pos]--;
+    for(int i = k; i > pos; i--) {
+        a[i] = n-k+i;
+    }
+    for(int i = 1; i <= k; i++) cout << a[i] << ' ';
     cout << endl;
-    
 }
 
 int main() {

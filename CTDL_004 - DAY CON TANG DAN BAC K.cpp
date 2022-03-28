@@ -3,39 +3,43 @@
 using namespace std;
 
 #define ll long long
+#define ull unsigned long long
 #define fi first
 #define sc second
 #define pb push_back
 #define all(x) x.begin(),x.end()
 #define endl "\n"
 
-const int maxn = 1e5+1;
+const int maxn = 105;
 const ll mod = 1e9+7;
 typedef pair<int,int> ii;
 
-int n,k;
-int x[maxn];
+int n, k;
+ll ans = 0;
+int a[maxn], b[maxn];
 
-void print() {
-    for(int i = 0; i < k; i++) {
-        cout << x[i];
-    }
-    cout << ' ';
-}
-
-void Try(int i) {
-    // x[i-1]+1 <= x[i] <= n-k+i+1 (i =  0 ... k-1)
-    for(int j = x[i-1]+1; j <= n-k+i+1; j++) {
-        x[i] = j;
-        if (i == k-1) print();
-        else Try(i+1);
-    }
+void Try(int pos, int pos2) {
+	if (pos2 == k) {
+		ans++;
+		return;
+	}
+	for(int i = pos+1; i < n; i++) {
+		if(a[i] >= a[pos]) {
+			b[pos2 + 1] = a[i];
+			Try(i, pos2 + 1); 
+		}
+	}
 }
 
 void process() {
     cin >> n >> k;
-    Try(0);
-    cout << endl;
+    ans = 0;
+    for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < n; i++) {
+    	Try(i, 1);
+    }
+    cout << ans << endl;
+    
     
 }
 
@@ -47,8 +51,8 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    int test;
-    cin >> test;
+    int test = 1;
+    //cin >> test;
     while(test--) {
         process();
     }

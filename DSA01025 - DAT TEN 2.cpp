@@ -9,7 +9,7 @@ using namespace std;
 #define all(x) x.begin(),x.end()
 #define endl "\n"
 
-const int maxn = 1e5+1;
+const int maxn = 35;
 const ll mod = 1e9+7;
 typedef pair<int,int> ii;
 
@@ -17,25 +17,25 @@ int n,k;
 int x[maxn];
 
 void print() {
-    for(int i = 0; i < k; i++) {
-        cout << x[i];
+    for(int i = 1; i <= k; i++) {
+        cout << char(x[i] + 64);
     }
-    cout << ' ';
+    cout << endl;
 }
 
 void Try(int i) {
     // x[i-1]+1 <= x[i] <= n-k+i+1 (i =  0 ... k-1)
-    for(int j = x[i-1]+1; j <= n-k+i+1; j++) {
+    for(int j = x[i-1]+1; j <= n-k+i; j++) {
         x[i] = j;
-        if (i == k-1) print();
+        if (i == k) print();
         else Try(i+1);
     }
 }
 
 void process() {
     cin >> n >> k;
-    Try(0);
-    cout << endl;
+    //x[0] = 0;
+    Try(1);
     
 }
 

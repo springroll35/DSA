@@ -9,34 +9,40 @@ using namespace std;
 #define all(x) x.begin(),x.end()
 #define endl "\n"
 
-const int maxn = 1e5+1;
+const int maxn = 35;
 const ll mod = 1e9+7;
 typedef pair<int,int> ii;
 
-int n,k;
+int n, k, s;
 int x[maxn];
+ll ans;
 
 void print() {
-    for(int i = 0; i < k; i++) {
-        cout << x[i];
+    int sum = 0;
+    for(int i = 1; i <= k; i++) {
+        sum += x[i];
     }
-    cout << ' ';
+    if(sum == s)
+        ans++;
 }
 
 void Try(int i) {
     // x[i-1]+1 <= x[i] <= n-k+i+1 (i =  0 ... k-1)
-    for(int j = x[i-1]+1; j <= n-k+i+1; j++) {
+    for(int j = x[i-1]+1; j <= n-k+i; j++) {
         x[i] = j;
-        if (i == k-1) print();
+        if (i == k) print();
         else Try(i+1);
     }
 }
 
 void process() {
-    cin >> n >> k;
-    Try(0);
-    cout << endl;
-    
+    while(1) {
+        cin >> n >> k >> s;
+        ans = 0;
+        if (n == 0 && k == 0 && s == 0) break;
+        Try(1);
+        cout << ans << endl;
+    }
 }
 
 int main() {
@@ -47,8 +53,8 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    int test;
-    cin >> test;
+    int test = 1;
+    //cin >> test;
     while(test--) {
         process();
     }
