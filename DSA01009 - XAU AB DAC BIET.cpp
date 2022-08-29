@@ -79,6 +79,7 @@ void process() {
     for(auto x : v) {
         cout << x << endl;
     }
+    
 }
 
 int main() {

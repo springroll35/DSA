@@ -15,28 +15,22 @@ const ll mod = 1e9+7;
 typedef pair<int,int> ii;
 
 void process() {
-    string s, x;
-    cin >> s >> x;
-    s = " " + s;
-    x = " " + x;
-    int m = s.length(), n = x.length();
-    int dp[m][n];
-    for (int i = 0; i < m; i++) {
-        dp[i][0] = 0;
+    int n;
+    cin >> n;
+	int a[n];
+	for(int i = 0; i < n; i++) cin >> a[i];
+	vector<int> l(n, 1), r(n, 1);
+	for(int i = 1; i < n; i++) {
+        if (a[i] > a[i - 1]) l[i] += l[i-1];
     }
-    for (int i = 0; i < n; i++) {
-        dp[0][i] = 0;
+	for(int i = n-2; ~i; i--) {
+        if (a[i] > a[i + 1]) r[i] += r[i+1];
     }
-    for(int i = 1; i < m; i++) {
-        for(int j = 1; j < n; j++) {
-            if (s[i] == x[j]) dp[i][j] = dp[i-1][j-1] + 1;
-            else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-        }
-    }
-    cout << dp[m-1][n-1] << endl;
-
-    
+	int ans = 0;
+	for(int i = 0; i < n; i++) ans = max(ans, l[i] + r[i] - 1);
+	cout << ans << endl;
 }
+
 
 int main() {
     #ifndef ONLINE_JUDGE
